@@ -19,7 +19,7 @@ def get_args():
     return args
 
 
-if __name__ == "__main__":
+def main():
     args = get_args()
     print(f"n_neighbors: {args.n_neighbors}, average: {
           args.average}, save: {args.save}")
@@ -31,33 +31,33 @@ if __name__ == "__main__":
     if save == 'false':
         save = 0
 
-iris = load_iris()
-X = iris.data
-y = iris.target
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
 
-x_train, x_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42)
 
-knn = KNeighborsClassifier(n_neighbors)
-knn.fit(x_train, y_train)
+    knn = KNeighborsClassifier(n_neighbors)
+    knn.fit(x_train, y_train)
 
-y_pred = knn.predict(x_test)
-if save:
-    # Save the results
-    print("Saving results...")
-    df = pd.DataFrame({
-        'Actual Label': y_test,
-        'Predicted Label': y_pred
-    })
-    filename = f"iris_knn_{n_neighbors}_{average}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
-    df.to_csv(filename, index=False)
+    y_pred = knn.predict(x_test)
+    if save:
+        # Save the results
+        print("Saving results...")
+        df = pd.DataFrame({
+            'Actual Label': y_test,
+            'Predicted Label': y_pred
+        })
+        filename = f"iris_knn_{n_neighbors}_{average}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        df.to_csv(filename, index=False)
 
-accuracy = accuracy_score(y_test, y_pred)
-precision = precision_score(y_test, y_pred, average=average)
-recall = recall_score(y_test, y_pred, average=average)
-f1 = f1_score(y_test, y_pred, average=average)
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average=average)
+    recall = recall_score(y_test, y_pred, average=average)
+    f1 = f1_score(y_test, y_pred, average=average)
 
-print("Accuracy:", accuracy)
-print("Precision:", precision)
-print("Recall:", recall)
-print("F1-score:", f1)
+    print("Accuracy:", accuracy)
+    print("Precision:", precision)
+    print("Recall:", recall)
+    print("F1-score:", f1)
