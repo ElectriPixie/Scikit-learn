@@ -5,6 +5,8 @@ from sklearn.metrics import mean_squared_error
 import argparse
 from datetime import datetime
 
+#using range=10 for the range of the wine quality metric
+range = 10
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -26,6 +28,7 @@ if __name__ == "__main__":
 
 # Load the Wine Quality dataset
 data = pd.read_csv('winequality-red.csv')
+std_dev = data['quality'].std()
 
 # Define the features (X) and the response variable (y)
 X = data.drop('quality', axis=1)
@@ -58,9 +61,16 @@ if save:
     filename = f"wineQuality-predictions_{test_size}_{random_state}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
     df.to_csv(filename, index=False)
 
-mse = mean_squared_error(y_test, y_pred)
-print(f'MSE: {mse}')
 
+mse = mean_squared_error(y_test, y_pred)
+# Calculate the percentage of the standard deviation that the MSE represents
+percentage = (mse / std_dev) * 100
+# Calculate the percentage of the range that the MSE represents
+percentage_range = (mse / 10) * 100
+print(f'MSE: {mse}')
+print(f'standard deviation: {std_dev}')
+print(f"The MSE of {mse} represents {percentage:.2f}% of the standard deviation.")
+print(f"The MSE of {mse} represents {percentage_range:.2f}% of the range.")
 # Print the coefficients
 print(model.coef_)
 
