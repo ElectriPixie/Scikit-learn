@@ -60,7 +60,7 @@ if save:
         'pH': x_test['pH'],
         'sulphates': x_test['sulphates'],
         'alcohol': x_test['alcohol'],
-        'predicted quality': x_pred
+        'predicted quality': y_pred
     })
     filename = f"wineQuality-predictions_{test_size}_{random_state}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
     df.to_csv(filename, index=False)
