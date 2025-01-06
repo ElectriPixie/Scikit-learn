@@ -1,12 +1,16 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
 import argparse
 from datetime import datetime
+import numpy as np
 
 #using range=10 for the range of the wine quality metric
 range = 10
+
+def mean_squared_log_error(y_true, y_pred):
+    return mean_squared_error(np.log(y_true + 1), np.log(y_pred + 1))
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -66,11 +70,12 @@ if save:
     df.to_csv(filename, index=False)
 
 # Evaluate the performance of the Random Forest Regressor
-mse = mean_squared_error(y_test, y_pred)
-percentage = (mse / std_dev) * 100
-# Calculate the percentage of the range that the MSE represents
-percentage_range = (mse / 10) * 100
-print(f'MSE: {mse}')
-print(f'standard deviation: {std_dev}')
-print(f"The MSE of {mse} represents {percentage:.2f}% of the standard deviation.")
-print(f"The MSE of {mse} represents {percentage_range:.2f}% of the range.")
+rf_mae = mean_absolute_error(y_test, y_pred)
+rf_mse = mean_squared_error(y_test, y_pred)
+rf_msle = mean_squared_log_error(y_test, y_pred)
+rf_r2 = r2_score(y_test, y_pred)
+
+print(f"Random Forest MAE: {rf_mae}")
+print(f"Random Forest MSE: {rf_mse}")
+print(f"Random Forest MSLE: {rf_msle}")
+print(f"Random Forest R2: {rf_r2}")

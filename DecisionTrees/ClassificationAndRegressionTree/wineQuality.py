@@ -66,7 +66,6 @@ if save:
 # Evaluate the performance of the Decision Tree Regressor
 mse = mean_squared_error(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
-#percentage_range = (mse / 10) * 100
 
 print(f"MSE: {mse}")
 print(f"MAE: {mae}")

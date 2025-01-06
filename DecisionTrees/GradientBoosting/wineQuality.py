@@ -1,7 +1,8 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.ensemble import GradientBoostingRegressor
+import numpy as np
 import argparse
 from datetime import datetime
 
@@ -14,6 +15,9 @@ def get_args():
     parser.add_argument("--save", choices=["true", "false"], default="false")
     args = parser.parse_args()
     return args
+
+def msle(y_true, y_pred):
+    return np.mean((np.log(y_true + 1) - np.log(y_pred + 1)) ** 2)
 
 if __name__ == "__main__":
     args = get_args()
@@ -52,13 +56,10 @@ gb_pred = gb.predict(x_test)
 
 # Evaluate the performance of the models
 gb_mse = mean_squared_error(y_test, gb_pred)
-
-percentage_gb = (gb_mse / std_dev) * 100
-percentage_gb_range = (gb_mse / 10) * 100
+gb_msle = msle(y_test, gb_pred)
 
 print(f"Gradient Boosting MSE: {gb_mse}")
-print(f"The MSE of Gradient Boosting {gb_mse} represents {percentage_gb:.2f}% of the standard deviation.")
-print(f"The MSE of Gradient Boosting {gb_mse} represents {percentage_gb_range:.2f}% of the range.")
+print(f"Gradient Boosting MSLE: {gb_msle}")
 
 if save:
     df = pd.DataFrame({
