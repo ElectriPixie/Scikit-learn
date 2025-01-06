@@ -33,33 +33,33 @@ data = pd.read_csv('winequality-red.csv')
 std_dev = data['quality'].std()
 
 # Split the data into features (X) and target variable (y)
-X = data.drop('quality', axis=1)
+x = data.drop('quality', axis=1)
 y = data['quality']
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=test_size, random_state=random_state)
 
 # Create a Random Forest Regressor
 rf = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
 
 # Train the Random Forest Regressor
-rf.fit(X_train, y_train)
+rf.fit(x_train, y_train)
 
 # Predict the wine quality using the trained Random Forest Regressor
-y_pred = rf.predict(X_test)
+y_pred = rf.predict(y_test)
 if save:
     df = pd.DataFrame({
-        'fixed acidity': X_test['fixed acidity'],
-        'volatile acidity': X_test['volatile acidity'],
-        'citric acid': X_test['citric acid'],
-        'residual sugar': X_test['residual sugar'],
-        'chlorides': X_test['chlorides'],
-        'free sulfur dioxide': X_test['free sulfur dioxide'],
-        'total sulfur dioxide': X_test['total sulfur dioxide'],
-        'density': X_test['density'],
-        'pH': X_test['pH'],
-        'sulphates': X_test['sulphates'],
-        'alcohol': X_test['alcohol'],
+        'fixed acidity': y_test['fixed acidity'],
+        'volatile acidity': y_test['volatile acidity'],
+        'citric acid': y_test['citric acid'],
+        'residual sugar': y_test['residual sugar'],
+        'chlorides': y_test['chlorides'],
+        'free sulfur dioxide': y_test['free sulfur dioxide'],
+        'total sulfur dioxide': y_test['total sulfur dioxide'],
+        'density': y_test['density'],
+        'pH': y_test['pH'],
+        'sulphates': y_test['sulphates'],
+        'alcohol': y_test['alcohol'],
         'predicted quality': y_pred
     })
     filename = f"wineQuality-predictions_{test_size}_{random_state}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
