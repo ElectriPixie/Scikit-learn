@@ -46,21 +46,21 @@ rf = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
 rf.fit(x_train, y_train)
 
 # Predict the wine quality using the trained Random Forest Regressor
-y_pred = rf.predict(y_test)
+y_pred = rf.predict(x_test)
 if save:
     df = pd.DataFrame({
-        'fixed acidity': y_test['fixed acidity'],
-        'volatile acidity': y_test['volatile acidity'],
-        'citric acid': y_test['citric acid'],
-        'residual sugar': y_test['residual sugar'],
-        'chlorides': y_test['chlorides'],
-        'free sulfur dioxide': y_test['free sulfur dioxide'],
-        'total sulfur dioxide': y_test['total sulfur dioxide'],
-        'density': y_test['density'],
-        'pH': y_test['pH'],
-        'sulphates': y_test['sulphates'],
-        'alcohol': y_test['alcohol'],
-        'predicted quality': y_pred
+        'fixed acidity': x_test['fixed acidity'],
+        'volatile acidity': x_test['volatile acidity'],
+        'citric acid': x_test['citric acid'],
+        'residual sugar': x_test['residual sugar'],
+        'chlorides': x_test['chlorides'],
+        'free sulfur dioxide': x_test['free sulfur dioxide'],
+        'total sulfur dioxide': x_test['total sulfur dioxide'],
+        'density': x_test['density'],
+        'pH': x_test['pH'],
+        'sulphates': x_test['sulphates'],
+        'alcohol': x_test['alcohol'],
+        'predicted quality': x_pred
     })
     filename = f"wineQuality-predictions_{test_size}_{random_state}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
     df.to_csv(filename, index=False)
